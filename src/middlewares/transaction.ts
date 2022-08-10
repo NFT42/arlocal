@@ -101,6 +101,7 @@ export async function txValidateMiddleware(ctx: Router.RouterContext, next: Next
       validationErrors.push(`"format" should be one of [1, 2]`);
     }
 
+    const txIDRegex = /[a-z0-9-_]{43}/i;
     // id validation
     if (!txIDRegex.test(body.id)) {
       validationErrors.push(`"id" should match regex: /[a-z0-9-_]{43}/i`);

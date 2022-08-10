@@ -14,6 +14,16 @@ export class WalletDB {
   }
 
   async addWallet(wallet: Wallet) {
+    // return await this.connection.transaction((trx) => {
+    //   this.connection('wallets')
+    //     .transacting(trx)
+    //     .insert({
+    //       id: Utils.randomID(64),
+    //       address: wallet.address,
+    //       balance: wallet.balance || 0,
+    //     })
+    //     .into('wallets');
+    // });
     return await this.connection
       .insert({
         id: Utils.randomID(64),

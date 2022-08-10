@@ -20,14 +20,27 @@ export class BlockDB {
     try {
       const id = Utils.randomID(64);
 
+      // await this.connection.transaction((trx) => {
+      //   this.connection('blocks')
+      //     .transacting(trx)
+      //     .insert({
+      //       id: id,
+      //       height: height,
+      //       mined_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      //       previous_block: previous,
+      //       txs: txs,
+      //       extended: JSON.stringify({}),
+      //     }).then(trx.commit);
+      // });
+
       await this.connection
         .insert({
-          id,
-          height,
-          mined_at: Date.now(),
+          id: id,
+          height: height,
+          mined_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
           previous_block: previous,
-          txs,
-          extended: '',
+          txs: txs,
+          extended: JSON.stringify({}),
         })
         .into('blocks');
 
@@ -54,16 +67,28 @@ export class BlockDB {
    */
   async insertGenesis(id: string) {
     try {
+      // await this.connection.transaction((trx) => {
+      //   this.connection('blocks')
+      //     .transacting(trx)
+      //     .insert({
+      //       id: id,
+      //       height: 0,
+      //       mined_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      //       previous_block: '',
+      //       txs: JSON.stringify(['']),
+      //       extended: JSON.stringify({}),
+      //     }).then(trx.commit);
+      // });
       await this.connection
         .insert({
-          id,
-          height: 0,
-          mined_at: Date.now(),
-          previous_block: '',
-          txs: [''],
-          extended: '',
-        })
-        .into('blocks');
+            id: id,
+            height: 0,
+            mined_at: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            previous_block: '',
+            txs: JSON.stringify(['']),
+            extended: JSON.stringify({}),
+          })
+          .into('blocks');
     } catch (error) {
       console.error({ error });
     }

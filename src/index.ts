@@ -12,7 +12,7 @@ const persist = argv.persist;
 const fails = argv.fails || 0;
 
 const dbPath = argv.dbpath ? join(process.cwd(), argv.dbpath) : appData('arlocal', '.db');
-
+console.log('persist: ', persist)
 let app: ArLocal;
 
 (async () => {

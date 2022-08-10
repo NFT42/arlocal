@@ -45,7 +45,7 @@ export async function up(knex: Knex) {
       table.string('id', 64).notNullable();
       table.integer('height', 4).notNullable();
       table.timestamp('mined_at').notNullable();
-      table.string('previous_block').notNullable();
+      table.specificType('previous_block', 'TEXT').notNullable();
       table.jsonb('txs').notNullable();
       table.jsonb('extended');
       table.timestamp('created_at').defaultTo(knex.fn.now());
@@ -60,7 +60,7 @@ export async function up(knex: Knex) {
       table.text('value');
       table.timestamp('created_at').defaultTo(knex.fn.now());
 
-      table.primary(['tx_id', 'index'], 'pkey_tags');
+      // table.primary(['tx_id', 'index'], 'pkey_tags');
       table.index(['tx_id', 'name'], 'tags_tx_id_name', 'BTREE');
       table.index(['name'], 'tags_name', 'HASH');
       table.index(['name', 'value'], 'tags_name_value', 'BTREE');
@@ -71,18 +71,18 @@ export async function up(knex: Knex) {
       table.float('balance').defaultTo(0);
       table.timestamp('created_at').defaultTo(knex.fn.now());
 
-      table.primary(['id'], 'pkey_tags');
+      // table.primary(['id'], 'pkey_tags');
     })
     .createTable('chunks', (table) => {
       table.string('id', 64).notNullable();
-      table.text('chunk').notNullable();
-      table.string('data_root').notNullable();
+      table.specificType('chunk', 'TEXT').notNullable();
+      table.specificType('data_root', 'TEXT').notNullable();
       table.integer('data_size').notNullable();
       table.integer('offset').notNullable();
-      table.string('data_path').notNullable();
+      table.specificType('data_path', 'TEXT').notNullable();
       table.timestamp('created_at').defaultTo(knex.fn.now());
 
-      table.primary(['id'], 'pkey_tags');
+      // table.primary(['id'], 'pkey_tags');
     });
 }
 
